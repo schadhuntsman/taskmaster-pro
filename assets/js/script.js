@@ -66,6 +66,31 @@ var text = $*(this)
 .val()
 .trim();
 
+//value of the date was changed
+$(".list-group").on("blur", "input[type='text']", function() {
+  //get current text
+  var date=$(this)
+  .val()
+  .trim();
+
+  //get the parent ul's id attribute 
+  var status = $(this)
+  .closest(".list-group")
+  .attr("id")
+  .replace(".list-", "");
+
+  //update task in array and re-save to localstorage
+  tasks[status][index].date = date;
+  saveTasks();
+
+  //recreate span element with bootstrap classes
+  var taskSpan = $("<span>")
+  .addClass("badge badge-primary badge-pill")
+  .text(date);
+
+  //replace input within span element
+  $(this).replaceWith(taskSpan);
+});
 
 //get parent ul's id attribute
 var status = $(this)
@@ -78,6 +103,14 @@ var index = $(this)
 .closest(".list-group-item")
 .index();
 });
+
+//recreate p element 
+var taskP = $("<p>")
+.addClass("m-1")
+.text(text);
+
+//replace textArea with p element
+$(this).replaceWith(taskP);
 
 // modal was triggered
 $("#task-form-modal").on("show.bs.modal", function() {
