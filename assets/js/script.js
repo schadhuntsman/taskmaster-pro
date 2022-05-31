@@ -1,5 +1,5 @@
 var tasks = {};
-
+$( "ul, li" ).disableSelection();
 var createTask = function(taskText, taskDate, taskList) {
   // create elements that make up a task item
   var taskLi = $("<li>").addClass("list-group-item");
@@ -154,6 +154,21 @@ $(".list-group").on("blur", "input[type='text']", function() {
     .index();
 
   // update task in array and re-save to localstorage
+  update: function(event) {
+    //loop over current set of children in sortable list
+    $(this).children().each(function() {
+      console.log($(this));
+      .find("p")
+      .text()
+      .trim();
+
+      var date = $(this)
+      .find("span")
+      .text()
+      .trim();
+      console.log(text, date);
+    });
+  }
   tasks[status][index].date = date;
   saveTasks();
 
@@ -163,7 +178,21 @@ $(".list-group").on("blur", "input[type='text']", function() {
     .text(date);
   $(this).replaceWith(taskSpan);
 });
-
+$("#trash".droppable({
+  accept: ".card .list-group-item",
+  tolerance: 'touch',
+  drop: function(event, ui) {
+    ui.draggable.remove();
+    console.log("drop");
+    
+    over: function(event, ui) {
+      console.log('over');
+    }
+    out: function(event, ui) {
+      console.log('out');
+    }
+  }
+}));
 // remove all tasks
 $("#remove-tasks").on("click", function() {
   for (var key in tasks) {
