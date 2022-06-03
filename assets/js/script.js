@@ -276,6 +276,13 @@ $(".list-group").on("change", "input[type='text']", function() {
     auditTask($(taskSpan).closest(".list-group-item"));
 });
 
+setInterval(function () {
+  //code execute
+  $(".card .list-group-item").each(function(index, el) {
+    auditTask(el);
+  });
+}, (1000 * 60) * 30);
+
 // remove all tasks
 $("#remove-tasks").on("click", function() {
   for (var key in tasks) {
